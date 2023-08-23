@@ -2,25 +2,43 @@ import React, { useState } from "react";
 import { TouchableOpacity, View, Text, TextInput } from "react-native";
 
 import { auth } from "../../Config";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Home({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function signUp() {
-        auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then()
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                alert('Conta criada!');
+                console.log(user);
+            })
             .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                    alert('esse email ja tem trutao')
-                }
-
-                if (error.code === 'auth/invalid-email') {
-                    alert('olha esse email ai palerma')
-                }
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert('Deu erra ai truta');
+                console.log(errorMessage);
             })
     }
+
+
+    function singIn() {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                alert("foi")
+                navigation.navigate('PokemonPage')
+            })
+            .catch(error => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert('Ve seus bagulho ai que tem alguma truta');
+                console.log(errorMessage);
+            })
+    }
+
 
     return (
         <View>
@@ -39,7 +57,7 @@ export default function Home({ navigation }) {
             </View>
 
             {/* <TouchableOpacity onPress={() => navigation.navigate('PokemonPage')}> */}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={singIn}>
                 <Text>Log In</Text>
             </TouchableOpacity>
 
