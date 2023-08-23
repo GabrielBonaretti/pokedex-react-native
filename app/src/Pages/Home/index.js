@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text, TextInput } from "react-native";
+import { TouchableOpacity, View, Text, TextInput, StyleSheet } from "react-native";
 
 import { auth } from "../../Config";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -28,7 +28,6 @@ export default function Home({ navigation }) {
     function singIn() {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
-                alert("foi")
                 navigation.navigate('PokemonPage')
             })
             .catch(error => {
@@ -41,29 +40,57 @@ export default function Home({ navigation }) {
 
 
     return (
-        <View>
-            <Text> App </Text>
+        <View style={styles.container}>
             <View>
                 <TextInput
+                    style={styles.input}
                     placeholder={"email"}
                     value={email}
                     onChangeText={setEmail}
                 />
                 <TextInput
+                    style={styles.input}
                     placeholder={"password"}
                     value={password}
                     onChangeText={setPassword}
+                    secureTextEntry={true}
                 />
             </View>
 
             {/* <TouchableOpacity onPress={() => navigation.navigate('PokemonPage')}> */}
-            <TouchableOpacity onPress={singIn}>
-                <Text>Log In</Text>
+            <TouchableOpacity onPress={singIn} style={styles.buttoes}>
+                <Text style={styles.textButton}>Log In</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={signUp}>
-                <Text>Sing Up</Text>
+            <TouchableOpacity onPress={signUp} style={styles.buttoes}>
+                <Text style={styles.textButton}>Sing Up</Text>
             </TouchableOpacity>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    input: {
+        margin: 5,
+        borderBottomWidth: 1,
+        width: 200,
+    },
+    buttoes: {
+        backgroundColor: '#222',
+        width: 200,
+        height: 30,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 5,
+        margin: 5,
+    },
+
+    textButton: {
+        color: '#FFF'
+    }
+})

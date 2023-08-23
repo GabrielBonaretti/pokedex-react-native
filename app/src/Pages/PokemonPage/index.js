@@ -9,11 +9,24 @@ export default function PokemonPage() {
   const [pokemons, setPokemons] = useState([]);
   const [itemID, setItemID] = useState(0);
   const [modal, setModal] = useState(false);
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(10);
+
+  const getText = async (url) => {
+    const { data } = await axios.get(url)
+    return { "textPokemon": data.flavor_text_entries[0].flavor_text, "colorPokemon": data.color.name }
+  }
 
   const getImgID = async (url) => {
     const { data } = await axios.get(url)
-    return { "idPokemon": data.id, "imgPokemon": data.sprites.front_default }
+
+    const { textPokemon, colorPokemon } = await getText(data.species.url)
+    return {
+      "idPokemon": data.id,
+      "imgPokemon": data.sprites.front_default,
+      "types": data.types,
+      "textPokemon": textPokemon,
+      "colorPokemon": colorPokemon
+    }
 
   }
 
@@ -22,18 +35,22 @@ export default function PokemonPage() {
     const pokeList = []
 
     for (const pokemon of data.results) {
-      const { idPokemon, imgPokemon } = await getImgID(pokemon.url)
+      const { idPokemon, imgPokemon, types, textPokemon, colorPokemon } = await getImgID(pokemon.url)
       pokeList.push({
         "id": idPokemon - 1,
         "name": pokemon.name,
         "img": imgPokemon,
+        "types": types,
+        "textPokemon": textPokemon,
+        "colorPokemon": colorPokemon,
       })
     }
 
     setPokemons(pokeList)
-    setLimit(prev => prev + 20)
-  }
+    setLimit(prev => prev + 10)
+    console.log(pokemons)
 
+  }
   useEffect(() => {
     getPokemons();
   }, [])
@@ -49,6 +66,7 @@ export default function PokemonPage() {
         onEndReachedThreshold={0.01}
         ListFooterComponent={<ActivityIndicator size={'large'} />}
         showsVerticalScrollIndicator={false}
+        style={styles.flatlist}
       />
 
 
@@ -71,8 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  imgPokes: {
-    width: 150,
-    height: 150,
+  flatlist: {
+    width: '99%'
   }
 })
