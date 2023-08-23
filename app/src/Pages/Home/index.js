@@ -14,13 +14,15 @@ export default function Home({ navigation }) {
             .then(userCredential => {
                 const user = userCredential.user;
                 alert('Conta criada!');
-                console.log(user);
+                setEmail('')
+                setPassword('')
             })
             .catch(error => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
                 alert('Deu erra ai truta');
                 console.log(errorMessage);
+                setEmail('')
+                setPassword('')
             })
     }
 
@@ -28,13 +30,16 @@ export default function Home({ navigation }) {
     function singIn() {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
+                setEmail('')
+                setPassword('')
                 navigation.navigate('PokemonPage')
             })
             .catch(error => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
                 alert('Ve seus bagulho ai que tem alguma truta');
                 console.log(errorMessage);
+                setEmail('')
+                setPassword('')
             })
     }
 
@@ -57,7 +62,6 @@ export default function Home({ navigation }) {
                 />
             </View>
 
-            {/* <TouchableOpacity onPress={() => navigation.navigate('PokemonPage')}> */}
             <TouchableOpacity onPress={singIn} style={styles.buttoes}>
                 <Text style={styles.textButton}>Log In</Text>
             </TouchableOpacity>

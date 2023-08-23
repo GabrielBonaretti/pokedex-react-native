@@ -7,11 +7,11 @@ export default function ModalComponent({ modal, pokemons, itemID, press }) {
             animationType="fade"
             transparent={true}
             visible={modal}
-            
+
         >
             <View style={styles.container}>
                 <View style={styles.modal}>
-                    <View>
+                    <View style={styles.teste}>
                         <View style={styles.viewIDName}>
                             <Text style={styles.fonteSize}>#{String(pokemons[itemID]?.id + 1).padStart(3, '0')}</Text>
                             <Text style={styles.fonteSize}>{String(pokemons[itemID]?.name).charAt(0).toUpperCase() + String(pokemons[itemID]?.name).slice(1)}</Text>
@@ -55,22 +55,27 @@ const styles = StyleSheet.create({
         backgroundColor: "#CCC",
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: '5vw',
+        borderRadius: 20,
     },
 
     viewIDName: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '80%',
     },
-
+    teste: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '80%',
+    },
     imgPokes: {
-        width: '100%',
+        width: 188,
         height: 188,
     },
 
     viewTypes: {
         flexDirection: 'row',
-        width: '100%',
+        width: '80%',
     },
 
     types: {
@@ -79,15 +84,14 @@ const styles = StyleSheet.create({
         borderWidth: 0.2,
         borderRadius: 10,
         margin: 2,
-        fontSize: '4.5vw'
+        fontSize: 17
     },
 
     fonteSize: {
-        fontSize: '4.5vw'
+        fontSize: 17
     },
 
     descriptionPokemon: {
-        width: '100%',
         textAlign: 'center',
         margin: 15,
     },

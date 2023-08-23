@@ -48,8 +48,6 @@ export default function PokemonPage() {
 
     setPokemons(pokeList)
     setLimit(prev => prev + 10)
-    console.log(pokemons)
-
   }
   useEffect(() => {
     getPokemons();

@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
         width: 115,
         alignItems: 'center',
         backgroundColor: 'rgba(255,255,255, .7)',
-        borderTopLeftRadius: "50%",
-        borderBottomLeftRadius: "50%"
+        borderTopLeftRadius: 75,
+        borderBottomLeftRadius: 75
 
     },
 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
     viewContent: {
         flex: 1,
-        height: '60%',
+        height: '100%',
         justifyContent: 'space-around',
         padding: 20,
     },
@@ -94,9 +94,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.2,
         borderRadius: 10,
         margin: 2,
-        fontSize: '4vw'
+        fontSize: 15
     },
     fonteSize: {
-        fontSize: '4vw'
+        fontSize: 15
     }
 })
